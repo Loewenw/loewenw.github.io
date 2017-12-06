@@ -50,11 +50,11 @@
   <nav class="site-navigation">
     <ul>
       
-        <li><a href="/">主页</a></li>
+        <li><a href="/">Home</a></li>
       
-        <li><a href="/archives">归档</a></li>
+        <li><a href="/archives">Archives</a></li>
       
-        <li><a href="/about">关于</a></li>
+        <li><a href="/about">About</a></li>
       
     </ul>
   </nav>
@@ -85,10 +85,53 @@
   <div class="article-content">
     <div class="entry">
       
-        
-        
           <h2 id="关于双向数据绑定"><a href="#关于双向数据绑定" class="headerlink" title="关于双向数据绑定"></a>关于双向数据绑定</h2><p>当我们在前端开发中采用MV*的模式时，M-model，指的是模型，也就是数据，V-view，指的是视图，也就是页面展现的部分。通常，我们需要编写代码，将从服务器获取的数据进行“渲染”，展现到视图上。每当数据有变更时，我们会再次进行渲染，从而更新视图，使得视图与数据保持一致。也就是：<br><img src="/img/Paste_Image1.png" alt=""></p>
-        
+<p>而另一方面，页面也会通过用户的交互，产生状态、数据的变化，这个时候，我们则编写代码，将视图对数据的更新同步到数据，以致于同步到后台服务器。也就是：<br><img src="/img/Paste_Image2.png" alt=""></p>
+<p>不同的前端 MV* 框架对于这种 Model 和 View 间的数据同步有不同的处理。在 Backbone 中，Model 到 View 的数据传递，可以在 View 中监听 Model 的 change 事件，每当 Model 更新，View 中重新执行 render。而 View 到 Model 的数据传递，可以监听 View 对应的 DOM 元素的各种事件，在检测到 View 状态变更后，将变更的数据发送到 Model。相较于 Backbone，AngularJS 所代表的 MVVM 框架则更进一步，从框架层面支持这种数据同步机制，而且是双向数据绑定：<br><img src="/img/Paste_Image3.png" alt=""></p>
+<p>不过在不同的 MVVM 框架中，实现双向数据绑定的技术有所不同。</p>
+<p>AngularJS 采用“脏值检测”的方式，数据发生变更后，对于所有的数据和视图的绑定关系进行一次检测，识别是否有数据发生了改变，有变化进行处理，可能进一步引发其他数据的改变，所以这个过程可能会循环几次，一直到不再有数据变化发生后，将变更的数据发送到视图，更新页面展现。如果是手动对 ViewModel 的数据进行变更，为确保变更同步到视图，需要手动触发一次“脏值检测”。</p>
+<p>VueJS 则使用 ES5 提供的 Object.defineProperty() 方法，监控对数据的操作，从而可以自动触发数据同步。并且，由于是在不同的数据上触发同步，可以精确的将变更发送给绑定的视图，而不是对所有的数据都执行一次检测。</p>
+<h2 id="关于Object-defineProperty"><a href="#关于Object-defineProperty" class="headerlink" title="关于Object.defineProperty"></a>关于Object.defineProperty</h2><p>这个函数接受三个参数，一个参数是obj，表示要定义属性的对象,一个参数是prop，是要定义或者更改的属性名字，另外是descriptor,描述符，来定义属性的具体描述。<br>Object.defineProperty(obj, prop, descriptor)</p>
+<p>下面的是实例代码，obj是一个没有属性的空对象，然后”key”是属性名，{}大括号里面定义了要给属性赋值的情况，value代表属性的值，proto代表继承属性的性质，这里面还有其他的选项。比如configurable,enumerable,writable等默认是false的。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">// using __proto__</div><div class="line">var obj = &#123;&#125;;</div><div class="line">Object.defineProperty(obj, <span class="string">'key'</span>, &#123;</div><div class="line">  __proto__: null, // no inherited properties</div><div class="line">  value: <span class="string">'static'</span>  // not enumerable</div><div class="line">                   // not configurable</div><div class="line">                   // not writable</div><div class="line">                   // as defaults</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>我们通过控制台的结果来感受一下writable为false的作用。我们发现，就算对”key”属性重新赋值了，它的属性仍然保持不变。</p>
+<p><img src="/img/defineProperty01.png" alt=""></p>
+<p>控制台结果</p>
+<p>descriptors（描述符）分成两种，一种是data descriptors,另外一种是 accessor descriptors.两种的descriptors有两个必选项,configurable和enumerable</p>
+<p>configurable<br>true if and only if the type of this property descriptor may be changed and if the property may be deleted from the corresponding object.Defaults to false<br>.</p>
+<p>代表这个属性的descriptor也就是描述是可以更改的，这个熟悉也能从对象上面删除,默认false,也就是不能更改跟属性有关的任意值，如果我重新对这个属性进行定义的话，会提示出错,同时也不能删除。</p>
+<p><img src="/img/configurable.png" alt=""></p>
+<p>configurable</p>
+<p>enumerable<br>true if and only if this property shows up during enumeration of the properties on the corresponding object.Defaults to false<br>.</p>
+<p>代表这个属性能够通过for in或者Object.keys<br> 来遍历。默认为false</p>
+<p><img src="/img/defineProperty03.png" alt=""></p>
+<p>关于enumerable的属性</p>
+<p>A data descriptor有两个可选项.</p>
+<p>value<br>The value associated with the property. Can be any valid JavaScript value (number, object, function, etc).Defaults to undefined<br>.</p>
+<p>这个选项为属性赋值，可以是任意的JavaScript值，默认为undefined</p>
+<p>writable<br>true if and only if the value associated with the property may be changed with an assignment operator.Defaults to false<br>.</p>
+<p>writable表示能不能够重写属性值，默认为false</p>
+<p>accessor descriptor也有两个关键的属性。</p>
+<p>get<br>A function which serves as a getter for the property, or undefined<br> if there is no getter. The function return will be used as the value of property.Defaults to undefined<br>.<br>set</p>
+<p>定义了一个函数，作为属性的getter,如果没有getter就为undefined 默认为undefined</p>
+<p>set<br>A function which serves as a setter for the property, or undefined<br> if there is no setter. The function will receive as only argument the new value being assigned to the property.Defaults to undefined<br>.</p>
+<p>同get</p>
+<p>这里面有一点是，可能会从原型链上面继承相应的属性，如果想避免这种情况，可以写get。所以可以用<strong>proto</strong>: null</p>
+<p>下面是一个可爱的例子</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">var o = &#123;&#125;; // Creates a new object 创造对象</div><div class="line"></div><div class="line">// Example of an object property added with defineProperty with a data property descriptor</div><div class="line">Object.defineProperty(o, <span class="string">'a'</span>, &#123;</div><div class="line">  value: 37,</div><div class="line">  writable: <span class="literal">true</span>,</div><div class="line">  enumerable: <span class="literal">true</span>,</div><div class="line">  configurable: <span class="literal">true</span></div><div class="line">&#125;);</div><div class="line">// <span class="string">'a'</span> property exists <span class="keyword">in</span> the o object and its value is 37 </div><div class="line"></div><div class="line">// Example of an object property added with defineProperty with an accessor property descriptor</div><div class="line">var bValue = 38;</div><div class="line">Object.defineProperty(o, <span class="string">'b'</span>, &#123;</div><div class="line">  get: <span class="function"><span class="title">function</span></span>() &#123; <span class="built_in">return</span> bValue; &#125;,</div><div class="line">  <span class="built_in">set</span>: <span class="keyword">function</span>(newValue) &#123; bValue = newValue; &#125;,</div><div class="line">  enumerable: <span class="literal">true</span>,</div><div class="line">  configurable: <span class="literal">true</span></div><div class="line">&#125;);</div><div class="line">o.b; // 38</div><div class="line">// <span class="string">'b'</span> property exists <span class="keyword">in</span> the o object and its value is 38</div><div class="line">// The value of o.b is now always identical to bValue, unless o.b is redefined</div><div class="line"></div><div class="line">// You cannot try to mix both:</div><div class="line">Object.defineProperty(o, <span class="string">'conflict'</span>, &#123;</div><div class="line">  value: 0x9f91102,</div><div class="line">  get: <span class="function"><span class="title">function</span></span>() &#123; <span class="built_in">return</span> 0xdeadbeef; &#125;</div><div class="line">&#125;);</div><div class="line">// throws a TypeError: value appears only <span class="keyword">in</span> data descriptors, get appears only <span class="keyword">in</span> accessor descriptors</div></pre></td></tr></table></figure>
+<p><img src="/img/defineProperty04.png" alt=""></p>
+<p>执行结果</p>
+<p>第一段代表定义了一个data descriptor,第二段代表定义了accessor descriptor，通get定义了取值操作，第三段代码告诉我们这两种不能混用。</p>
+<h3 id="视图和数据变化绑定"><a href="#视图和数据变化绑定" class="headerlink" title="视图和数据变化绑定"></a>视图和数据变化绑定</h3><p>而vue.js主要利用了accessor descriptors的set和get来更新视图，这里看到的这个例子挺好，是一个简单的绑定。<br>对于一个html页面</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;div&gt;</div><div class="line">    &lt;p&gt;你好，&lt;span id=<span class="string">'nickName'</span>&gt;&lt;/span&gt;&lt;/p&gt;</div><div class="line">    &lt;div id=<span class="string">"introduce"</span>&gt;&lt;/div&gt;</div><div class="line">&lt;/div&gt;</div></pre></td></tr></table></figure>
+<p>设置一个数据的属性的getter和setter</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">//视图控制器</div><div class="line">var userInfo = &#123;&#125;;</div><div class="line">Object.defineProperty(userInfo, <span class="string">"nickName"</span>, &#123;</div><div class="line">    get: <span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">        <span class="built_in">return</span> document.getElementById(<span class="string">'nickName'</span>).innerHTML;</div><div class="line">    &#125;,</div><div class="line">    <span class="built_in">set</span>: <span class="keyword">function</span>(nick)&#123;</div><div class="line">        document.getElementById(<span class="string">'nickName'</span>).innerHTML = nick;</div><div class="line">    &#125;</div><div class="line">&#125;);</div><div class="line">Object.defineProperty(userInfo, <span class="string">"introduce"</span>, &#123;</div><div class="line">    get: <span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">        <span class="built_in">return</span> document.getElementById(<span class="string">'introduce'</span>).innerHTML;</div><div class="line">    &#125;,</div><div class="line">    <span class="built_in">set</span>: <span class="keyword">function</span>(introduce)&#123;</div><div class="line">        document.getElementById(<span class="string">'introduce'</span>).innerHTML = introduce;</div><div class="line">    &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>然后就能愉快地绑定数据交互了。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">userInfo.nickName = <span class="string">"xxx"</span>;</div><div class="line">userInfo.introduce = <span class="string">"我是xxx，我来自云南，..."</span></div></pre></td></tr></table></figure>
+<h3 id="vue-js的数据变动"><a href="#vue-js的数据变动" class="headerlink" title="vue.js的数据变动"></a>vue.js的数据变动</h3><p>但是，这个例子只是数据和dom节点的绑定，而vue.js更为复杂一点，它在网页dom和accessor之间会有两层，一层是Wacher，一层是Directive，比如以下代码。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">var a = &#123; b: 1 &#125;</div><div class="line">var vm = new Vue(&#123; </div><div class="line">  data: data</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>把一个普通对象（a={b:1}）传给 Vue 实例作为它的 data 选项，Vue.js 将遍历它的属性，用Object.defineProperty 将它们转为 getter/setter,如图绿色的部分所示。<br>每次用户更改data里的数据的时候，比如a.b =1，setter就会重新通知Watcher进行变动，Watcher再通知Directive对dom节点进行更改。<br><img src="/img/defineProperty05.png" alt=""></p>
+
       
     </div>
 
