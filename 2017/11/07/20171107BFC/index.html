@@ -3,27 +3,26 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Debounce 和 Throttle 的原理 | 听听代码敲敲歌</title>
+  <title>BFC | 听听代码敲敲歌</title>
 
   
   <meta name="author" content="Loe Wen">
   
 
   
-  <meta name="description" content="在处理诸如 resize、scroll、mousemove 和 keydown/keyup/keypress 等事件的时候，通常我们不希望这些事件太过频繁地触发，尤其是监听程序中涉及到大量的计算或者有非常耗费资源的操作。
-有多频繁呢？以 mousemove 为例，根据 DOM Level 3 的规定">
+  <meta name="description" content="BFC(Block formatting context)直译为&#34;块级格式化上下文&#34;。它是一个独立的渲染区域，只有Block-level box参与， 它规定了内部的Block-level Box如何布局，并且与这个区域外部毫不相干。">
   
 
   
   
-  <meta name="keywords" content="js">
+  <meta name="keywords" content="CSS">
   
 
   <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
-  <meta property="og:title" content="Debounce 和 Throttle 的原理"/>
+  <meta property="og:title" content="BFC"/>
 
   <meta property="og:site_name" content="听听代码敲敲歌"/>
 
@@ -66,15 +65,15 @@
 
   
     
-    <h3 class="article-title"><span>Debounce 和 Throttle 的原理</span></h3>
+    <h3 class="article-title"><span>BFC</span></h3>
     
   
 
   <div class="article-top-meta">
     <span class="posted-on">
-      <a href="/2017/11/05/20171105debounce/" rel="bookmark">
-        <time class="entry-date published" datetime="2017-11-05T02:20:47.000Z">
-          2017-11-05
+      <a href="/2017/11/07/20171107BFC/" rel="bookmark">
+        <time class="entry-date published" datetime="2017-11-07T11:40:24.000Z">
+          2017-11-07
         </time>
       </a>
     </span>
@@ -88,7 +87,7 @@
       
         
         
-          <p>在处理诸如 resize、scroll、mousemove 和 keydown/keyup/keypress 等事件的时候，通常我们不希望这些事件太过频繁地触发，尤其是监听程序中涉及到大量的计算或者有非常耗费资源的操作。</p>
+          <h2 id="一、BFC是什么？"><a href="#一、BFC是什么？" class="headerlink" title="一、BFC是什么？"></a>一、BFC是什么？</h2><p>在解释 BFC 是什么之前，需要先介绍 Box、Formatting Context的概念。<br>Box: CSS布局的基本单位<br>Box 是 CSS 布局的对象和基本单位， 直观点来说，就是一个页面是由很多个 Box 组成的。元素的类型和 display 属性，决定了这个 Box 的类型。 不同类型的 Box， 会参与不同的 Formatting Context（一个决定如何渲染文档的容器），因此Box内的元素会以不同的方式渲染。让我们看看有哪些盒子：<br>block-level box:display 属性为 block, list-item, table 的元素，会生成 block-level box。并且参与 block fomatting context；<br>inline-level box:display 属性为 inline, inline-block, inline-table 的元素，会生成 inline-level box。并且参与 inline formatting context；<br>run-in box: css3 中才有，这儿先不讲了。</p>
         
       
     </div>
@@ -105,7 +104,7 @@
 
     <span class="post-tags">
       <i class="icon-tags"></i>
-        <a href="/tags/js/">js</a>
+        <a href="/tags/CSS/">CSS</a>
     </span>
     
 

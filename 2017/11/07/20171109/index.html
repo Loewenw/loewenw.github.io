@@ -3,15 +3,14 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Debounce 和 Throttle 的原理 | 听听代码敲敲歌</title>
+  <title>数据双向绑定以及Object.defineProperty函数 | 听听代码敲敲歌</title>
 
   
   <meta name="author" content="Loe Wen">
   
 
   
-  <meta name="description" content="在处理诸如 resize、scroll、mousemove 和 keydown/keyup/keypress 等事件的时候，通常我们不希望这些事件太过频繁地触发，尤其是监听程序中涉及到大量的计算或者有非常耗费资源的操作。
-有多频繁呢？以 mousemove 为例，根据 DOM Level 3 的规定">
+  <meta name="description" content="不同的前端 MV* 框架对于这种 Model 和 View 间的数据同步有不同的处理。在 Backbone 中，Model 到 View 的数据传递，可以在 View 中监听 Model 的 change 事件，每当 Model 更新，View 中重新执行 render。而 View 到 Model 的数据传递，可以监听 View 对应的 DOM 元素的各种事件，在检测到 View 状态变更后，将变更的数据发送到 Model。">
   
 
   
@@ -23,7 +22,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
-  <meta property="og:title" content="Debounce 和 Throttle 的原理"/>
+  <meta property="og:title" content="数据双向绑定以及Object.defineProperty函数"/>
 
   <meta property="og:site_name" content="听听代码敲敲歌"/>
 
@@ -66,15 +65,15 @@
 
   
     
-    <h3 class="article-title"><span>Debounce 和 Throttle 的原理</span></h3>
+    <h3 class="article-title"><span>数据双向绑定以及Object.defineProperty函数</span></h3>
     
   
 
   <div class="article-top-meta">
     <span class="posted-on">
-      <a href="/2017/11/05/20171105debounce/" rel="bookmark">
-        <time class="entry-date published" datetime="2017-11-05T02:20:47.000Z">
-          2017-11-05
+      <a href="/2017/11/07/20171109/" rel="bookmark">
+        <time class="entry-date published" datetime="2017-11-07T11:40:24.000Z">
+          2017-11-07
         </time>
       </a>
     </span>
@@ -88,7 +87,7 @@
       
         
         
-          <p>在处理诸如 resize、scroll、mousemove 和 keydown/keyup/keypress 等事件的时候，通常我们不希望这些事件太过频繁地触发，尤其是监听程序中涉及到大量的计算或者有非常耗费资源的操作。</p>
+          <h2 id="关于双向数据绑定"><a href="#关于双向数据绑定" class="headerlink" title="关于双向数据绑定"></a>关于双向数据绑定</h2><p>当我们在前端开发中采用MV*的模式时，M-model，指的是模型，也就是数据，V-view，指的是视图，也就是页面展现的部分。通常，我们需要编写代码，将从服务器获取的数据进行“渲染”，展现到视图上。每当数据有变更时，我们会再次进行渲染，从而更新视图，使得视图与数据保持一致。也就是：<br><img src="/img/Paste_Image1.png" alt=""></p>
         
       
     </div>
