@@ -3,26 +3,26 @@
 <head>
   <meta charset="utf-8">
   
-  <title>元素居中方法 | 听听代码敲敲歌</title>
+  <title>http中的keep-alive | 听听代码敲敲歌</title>
 
   
   <meta name="author" content="Loe Wen">
   
 
   
-  <meta name="description" content="用css实现元素居中方法。">
+  <meta name="description" content="我们知道HTTP协议采用“请求-应答”模式，当使用普通模式，即非KeepAlive模式时，每个请求/应答客户和服务器都要新建一个连接，完成之后立即断开连接（HTTP协议为无连接的协议）；当使用Keep-Alive模式（又称持久连接、连接重用）时，Keep-Alive功能使客户端到服务器端的连接持续有效，当出现对服务器的后继请求时，Keep-Alive功能避免了建立或者重新建立连接。">
   
 
   
   
-  <meta name="keywords" content="CSS">
+  <meta name="keywords" content="http">
   
 
   <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
-  <meta property="og:title" content="元素居中方法"/>
+  <meta property="og:title" content="http中的keep-alive"/>
 
   <meta property="og:site_name" content="听听代码敲敲歌"/>
 
@@ -50,11 +50,11 @@
   <nav class="site-navigation">
     <ul>
       
-        <li><a href="/">Home</a></li>
+        <li><a href="/">主页</a></li>
       
-        <li><a href="/archives">Archives</a></li>
+        <li><a href="/archives">归档</a></li>
       
-        <li><a href="/about">About</a></li>
+        <li><a href="/about">关于</a></li>
       
     </ul>
   </nav>
@@ -65,15 +65,15 @@
 
   
     
-    <h3 class="article-title"><span>元素居中方法</span></h3>
+    <h3 class="article-title"><span>http中的keep-alive</span></h3>
     
   
 
   <div class="article-top-meta">
     <span class="posted-on">
-      <a href="/2017/11/07/20171108/" rel="bookmark">
-        <time class="entry-date published" datetime="2017-11-07T11:40:24.000Z">
-          2017-11-07
+      <a href="/2017/11/11/20171111/" rel="bookmark">
+        <time class="entry-date published" datetime="2017-11-11T10:11:29.000Z">
+          2017-11-11
         </time>
       </a>
     </span>
@@ -87,7 +87,7 @@
       
         
         
-          <h2 id="一、使用text-align-center-居中"><a href="#一、使用text-align-center-居中" class="headerlink" title="一、使用text-align: center;居中"></a>一、使用text-align: center;居中</h2><p>对于行内元素或具有inline-block属性的元素居中，比如span、img等可以使用text-align: center;来实现。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">/*css*/</div><div class="line">div&#123;</div><div class="line">    border:1px solid red;</div><div class="line">    text-align: center;</div><div class="line">    width: 200px;</div><div class="line">&#125;</div><div class="line">div span&#123;</div><div class="line">    width: 100px;</div><div class="line">    background: <span class="comment">#ddd;</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+          <h2 id="1、什么是Keep-Alive模式？"><a href="#1、什么是Keep-Alive模式？" class="headerlink" title="1、什么是Keep-Alive模式？"></a>1、什么是Keep-Alive模式？</h2><p>我们知道HTTP协议采用“请求-应答”模式，当使用普通模式，即非KeepAlive模式时，每个请求/应答客户和服务器都要新建一个连接，完成之后立即断开连接（HTTP协议为无连接的协议）；当使用Keep-Alive模式（又称持久连接、连接重用）时，Keep-Alive功能使客户端到服务器端的连接持续有效，当出现对服务器的后继请求时，Keep-Alive功能避免了建立或者重新建立连接。</p>
         
       
     </div>
@@ -104,7 +104,7 @@
 
     <span class="post-tags">
       <i class="icon-tags"></i>
-        <a href="/tags/CSS/">CSS</a>
+        <a href="/tags/http/">http</a>
     </span>
     
 
