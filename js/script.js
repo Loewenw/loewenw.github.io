@@ -20,18 +20,18 @@
     });
 
    $('a[href*=#]').bind('click', function(e) {
-	e.preventDefault();
-       
-	var target = $(this).attr("href");
+  	 e.preventDefault();
+         
+  	 var target = $(this).attr("href");
 
-	$('html, body').stop().animate({ scrollTop: $(target).offset().top-140 }, 1000, function() {});
-			
-	return false;
+  	 $('html, body').stop().animate({ scrollTop: $(target).offset().top }, 1000, function() {});
+  			
+  	 return false;
    });
 
   $('.arrow-down').bind('click', function() {
 
-      $('html, body').stop().animate({ scrollTop: $("#photo").offset().top-70 }, 1000);
+      $('html, body').stop().animate({ scrollTop: $("#article").offset().top }, 1000);
 
       return false;
   });

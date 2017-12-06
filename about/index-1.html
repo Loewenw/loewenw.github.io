@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
   	<head>
-	<<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<meta name="description" content="Free download theme onepage, clean and modern responsive for all">
@@ -10,7 +10,8 @@
 		<link rel="icon" href="/img/favicon.png">
 	
 	  
-	<title>about | 听代码敲歌</title>
+	<title>about | 听听代码敲敲歌</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="/css/reset.css">
 <link rel="stylesheet" href="/css/style.css">
 <link rel="stylesheet" href="/css/style-responsive.css">
@@ -19,6 +20,9 @@
 <body>
   	<main id='post'>
   <div class="content">
+    <!-- section menu mobile -->
+    
+    
     <article>
         <section class="content markdown-body">
           <h1>about</h1>
@@ -31,20 +35,6 @@
         </section>
     </article>
     
-        <!-- disqus 评论框 start -->
-        <div class="comment">
-            <div id="disqus_thread" class="disqus-thread">
-              <i>加载评论框需要翻墙</i>
-            </div>
-        </div>
-        <!-- disqus 评论框 end -->
-    
-    
-        <!-- livere 评论框 start -->
-        <div class="comment">
-            <div id="lv-container" data-id="city" data-uid="your_livere_uid"></div>
-        </div>
-        <!-- livere 评论框 end -->
         
   </div>
   <aside>
@@ -52,68 +42,14 @@
   </aside>
 </main>
 
-<!-- disqus 公共JS代码 -->
-<script type="text/javascript">
-  /* * * CONFIGURATION VARIABLES * * */
-  var disqus_shortname = "your_disqus_shortname";
-  var disqus_identifier = "http://yoursite.com/about/index-1.html";
-  var disqus_url = "http://yoursite.com/about/index-1.html";
-
-  isAgent(getDisqus)
-
-  // determine user agent in China
-  function isAgent(cb) {
-    var url = '//graph.facebook.com/feed?callback=h';
-    var xhr = new XMLHttpRequest();
-    var called = false;
-    xhr.open('GET', url);
-    xhr.onreadystatechange = function() {
-      if (xhr.readyState === 4 && xhr.status === 200) {
-      called = true;
-      cb(true);
-      }
-    };
-    xhr.send();
-    // timeout 1s, this facebook API is very fast.
-    setTimeout(function() {
-      if (!called) {
-      xhr.abort();
-      cb(false)
-      }
-    }, 1000);
-  }
-
-  function getDisqus(isAgent) {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; 
-    dsq.async = true
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq)
-  }
-</script>
-<!-- disqus 公共JS代码 end -->
-
-
-<script type="text/javascript">
-  (function(d, s) {
-      var j, e = d.getElementsByTagName(s)[0];
-
-      if (typeof LivereTower === 'function') { return; }
-
-      j = d.createElement(s);
-      j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-      j.async = true;
-
-      e.parentNode.insertBefore(j, e);
-  })(document, 'script');
-</script>
 
 
   	<script src="/lib/jquery-1.11.0.min.js"></script>
-<script src="/lib/query-ui-1.10.4.min.js"></script>
+<script src="/lib/jquery-ui-1.10.4.min.js"></script>
 <script src="/lib/jquery.nicescroll.js"></script>
-<script src="/lib/query.sticky.js"></script>
+<script src="/lib/jquery.sticky.js"></script>
 <script src="/lib/masonry.pkgd.min.js"></script>
-<script src="/lib/magesloaded.pkgd.min.js"></script>
+<script src="/lib/imagesloaded.pkgd.min.js"></script>
 
 <script>
  $(function(){
