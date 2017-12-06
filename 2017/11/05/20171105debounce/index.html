@@ -3,21 +3,27 @@
 <head>
   <meta charset="utf-8">
   
-  <title>归档 | 听听代码敲敲歌</title>
+  <title>Debounce 和 Throttle 的原理 | 听听代码敲敲歌</title>
 
   
   <meta name="author" content="Loe Wen">
   
 
   
+  <meta name="description" content="在处理诸如 resize、scroll、mousemove 和 keydown/keyup/keypress 等事件的时候，通常我们不希望这些事件太过频繁地触发，尤其是监听程序中涉及到大量的计算或者有非常耗费资源的操作。
+有多频繁呢？以 mousemove 为例，根据 DOM Level 3 的规定">
+  
 
+  
+  
+  <meta name="keywords" content="js">
   
 
   <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
-  
+  <meta property="og:title" content="Debounce 和 Throttle 的原理"/>
 
   <meta property="og:site_name" content="听听代码敲敲歌"/>
 
@@ -56,43 +62,60 @@
 </header>
 
     <main class="site-main posts-loop">
-    
+    <article>
 
-<article>
-
-  <h2 class="article-title ">归档</h2>
-
-  <div class="archive">
-    
-      <div class="post archive">
-        <div class="archive-post">
-          <time datetime="2017-11-19T09:26:30.000Z">
-            <a href="/2017/11/19/hello-world/">2017-11-19</a>
-          </time>
-          
-            <h3 class="archive-title"><a href="/2017/11/19/hello-world/"><span>Hello World</span></a></h3>
-          
-        </div>
-      </div>
-    
-      <div class="post archive">
-        <div class="archive-post">
-          <time datetime="2017-11-05T02:20:47.000Z">
-            <a href="/2017/11/05/20171105debounce/">2017-11-05</a>
-          </time>
-          
-            <h3 class="archive-title"><a href="/2017/11/05/20171105debounce/"><span>Debounce 和 Throttle 的原理</span></a></h3>
-          
-        </div>
-      </div>
-    
-    <nav class="pagination">
   
+    
+    <h3 class="article-title"><span>Debounce 和 Throttle 的原理</span></h3>
+    
   
-</nav>
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2017/11/05/20171105debounce/" rel="bookmark">
+        <time class="entry-date published" datetime="2017-11-05T02:20:47.000Z">
+          2017-11-05
+        </time>
+      </a>
+    </span>
   </div>
 
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        
+        
+          <p>在处理诸如 resize、scroll、mousemove 和 keydown/keyup/keypress 等事件的时候，通常我们不希望这些事件太过频繁地触发，尤其是监听程序中涉及到大量的计算或者有非常耗费资源的操作。</p>
+        
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/js/">js</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
 </article>
+
+
     </main>
 
     <footer class="site-footer">
